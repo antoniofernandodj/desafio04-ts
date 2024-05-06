@@ -13,8 +13,8 @@ export class UserController {
     createUser = (request: Request, response: Response): Response => {
         const user = request.body
 
-        if(!user.name){
-            return response.status(400).json({ message: 'Bad request! Name obrigatório'})
+        if(!user.name || !user.email){
+            return response.status(400).json({ message: 'Bad request! Name e email obrigatórios'})
         }
 
         this.userService.createUser(user.name, user.email)
@@ -24,5 +24,17 @@ export class UserController {
     getAllUsers = (request: Request, response: Response) => {
         const users = this.userService.getAllUsers()
         return response.status(200).json( users )
-    } 
+    }
+
+    removeUser = (request: Request, response: Response): Response => {
+        const { email } = request.params
+
+        if (!email) {
+            return response.status(400).json({ message: 'Bad request! Email obrigatório'})
+        }
+
+        this.userService.removeUser(email)
+        return response.status(200).json({ message: `Usuário com o email ${email} removido com sucesso.` })
+    }
+
 }

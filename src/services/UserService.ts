@@ -13,17 +13,12 @@ const db = [
 export class UserService {
     db: User[]
 
-    constructor(
-        database = db
-    ){
+    constructor(database = db) {
         this.db = database
     }
 
     createUser = (name: string, email: string) => {
-        const user = {
-            name,
-            email
-        }
+        const user = { name, email }
 
         this.db.push(user)
         console.log('DB atualizado', this.db)
@@ -32,5 +27,15 @@ export class UserService {
     getAllUsers = () => {
         return this.db
     }
-}
 
+    removeUser = (email: string) => {
+        const index = this.db.findIndex(user => user.email === email)
+        if (index !== -1) {
+            this.db.splice(index, 1)
+            console.log(`Usuário de email ${email} removido com sucesso.`)
+        } else {
+            console.log(`Usuário de email ${email} não encontrado.`)
+        }
+        console.log('DB atualizado', this.db)
+    }
+}

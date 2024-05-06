@@ -9,6 +9,7 @@ export type MockResponse<TResult> = Response & {
 
 export function makeMockResponse<TResult>() {
     const response = {
+      json: {},
       state: {
       }
     } as MockResponse<TResult>;
